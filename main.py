@@ -13,7 +13,7 @@ WHITE = (255,255,255)
 BLACK = (0,0,0)
 GRAVITY = 9.8
 
-blocks = [pygame.sprite.Group()]
+blocks = pygame.sprite.Group()
 
 def main():
     
