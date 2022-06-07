@@ -1,3 +1,4 @@
+from cmath import sqrt
 import random
 import pygame, sys
 
@@ -44,7 +45,7 @@ def main():
 
             if event.type == pygame.MOUSEBUTTONUP:
                 pos = pygame.mouse.get_pos()
-                p = Particle(pos,10)
+                p = Particle(pos,50)
                 particles.append(p)
 
         pygame.display.update()
@@ -67,8 +68,10 @@ def update(particle):
     particle.draw()
 
 def check_collisions(particle):
+    
     for point in particles:
-        pass
+        if(point != particle):
+            particle.check_if_collides(point)
     
     
     pass
@@ -124,8 +127,22 @@ class Particle:
     def draw(self):
         pygame.draw.circle(WIN, self.color, self.position, self.radius)
 
-    def check_if_collides(self, particle):
-        pass
+    def change_color(self):
+        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
     
+    def check_if_collides(self, particle):
+        x1 = self.position[0]
+        x2 = particle.position[0]
+        y1 = self.position[1]
+        y2 = particle.position[1]
+        collides = (abs(sqrt( (x2 - x1) ** 2 +  (y2 - y1) ** 2))) <= (self.radius + particle.radius)
+        if(collides):
+            self.change_color()
+            particle.change_color()
+        
+        
+        
+        
+        
 if __name__ == "__main__":
     main()
