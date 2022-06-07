@@ -1,3 +1,4 @@
+import random
 import pygame, sys
 
 
@@ -50,9 +51,10 @@ def main():
     
 def update(particle):
     
-    particle.force = [0, GRAVITY]
+    particle.force = [0,0]
     
-    check_collision(particle)  
+    check_wall_collision(particle)
+    check_collisions(particle)  
     
     particle.velocity[0] = particle.velocity[0] + particle.force[0] * DELTA_TIME / particle.mass
     particle.velocity[1] = particle.velocity[1] + particle.force[1] * DELTA_TIME / particle.mass
@@ -64,7 +66,15 @@ def update(particle):
     particle.update_cords()
     particle.draw()
 
-def check_collision(particle):
+def check_collisions(particle):
+    for point in particles:
+        pass
+    
+    
+    pass
+
+
+def check_wall_collision(particle):
     collision = False
     # top
     if(particle.top <= BOX.top):
@@ -95,14 +105,15 @@ class Particle:
     
     def __init__(self, position, radius, mass=1):
         self.position = list(position)
-        self.velocity = [500,0]
-        self.force = [5000,GRAVITY * mass]
+        self.velocity = [random.randint(-750,750),random.randint(-750,750)]
+        self.force = [0,0]
         self.mass = mass
         self.radius = radius
         self.top = position[1] - radius
         self.bottom = position[1] + radius
         self.left = position[0] - radius
         self.right = position[0] + radius
+        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
     
     def update_cords(self):
         self.top = self.position[1] - self.radius
@@ -111,9 +122,10 @@ class Particle:
         self.right = self.position[0] + self.radius
         
     def draw(self):
-        pygame.draw.circle(WIN, WHITE, self.position, self.radius)
+        pygame.draw.circle(WIN, self.color, self.position, self.radius)
 
-
+    def check_if_collides(self, particle):
+        pass
     
 if __name__ == "__main__":
     main()
